@@ -1,0 +1,43 @@
+{
+  "scripts": {
+    "build": "nest build",
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "start:debug": "nest start --debug --watch",
+    "start:prod": "node dist/main",
+   //"test": "jest",//
+    //"test:watch": "jest --watch",
+    //"test:cov": "jest --coverage",
+    "deploy": "serverless deploy",
+    "deploy:dev": "serverless deploy --stage dev",
+    "deploy:prod": "serverless deploy --stage prod",
+    "offline": "serverless offline"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^11.0.10",
+    "tslib": "^2.6.2",
+    "@types/aws-lambda": "^8.10.157",
+    "@types/express": "^5.0.5",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.10.0",
+    "@types/supertest": "^6.0.3",
+    "serverless-offline": "^14.4.0",
+    "supertest": "^7.1.4",
+    "ts-jest": "^29.4.5",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@commercetools/platform-sdk": "^8.18.0",
+    "@commercetools/sdk-client-v2": "^3.0.0",
+    "@nestjs/common": "^11.1.8",
+    "@nestjs/config": "^4.0.2",
+    "@nestjs/core": "^11.1.8",
+    "@nestjs/platform-express": "^11.1.8",
+    "@nestjs/testing": "^11.1.8",
+    "@vendia/serverless-express": "^4.12.6",
+    "aws-lambda": "^1.0.7",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.2",
+    "tslib": "^2.8.1"
+  }
+}

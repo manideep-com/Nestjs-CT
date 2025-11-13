@@ -1,0 +1,390 @@
+{
+  "service": {
+    "service": "commercetools-microservice",
+    "serviceObject": {
+      "name": "commercetools-microservice"
+    },
+    "provider": {
+      "name": "aws",
+      "runtime": "nodejs18.x",
+      "stage": "dev",
+      "region": "us-east-1",
+      "memorySize": 512,
+      "timeout": 30,
+      "environment": {
+        "NODE_ENV": "production",
+        "CTP_PROJECT_KEY": "n8n-ct-integration",
+        "CTP_CLIENT_ID": "3ogovnp3HPv04_cmIO2KYAYt",
+        "CTP_CLIENT_SECRET": "yD7_UU2kgnyRrgV5eYtEchnZVfXOlb_i",
+        "CTP_API_URL": "https://api.australia-southeast1.gcp.commercetools.com",
+        "CTP_AUTH_URL": "https://auth.australia-southeast1.gcp.commercetools.com",
+        "CTP_SCOPES": "manage_project:n8n-ct-integration"
+      },
+      "versionFunctions": true,
+      "compiledCloudFormationTemplate": {
+        "AWSTemplateFormatVersion": "2010-09-09",
+        "Description": "The AWS CloudFormation template for this Serverless application",
+        "Resources": {
+          "ApiLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/commercetools-microservice-dev-api"
+            }
+          },
+          "IamRoleLambdaExecution": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+              "AssumeRolePolicyDocument": {
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Principal": {
+                      "Service": [
+                        "lambda.amazonaws.com"
+                      ]
+                    },
+                    "Action": [
+                      "sts:AssumeRole"
+                    ]
+                  }
+                ]
+              },
+              "Policies": [
+                {
+                  "PolicyName": {
+                    "Fn::Join": [
+                      "-",
+                      [
+                        "commercetools-microservice",
+                        "dev",
+                        "lambda"
+                      ]
+                    ]
+                  },
+                  "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "logs:CreateLogStream",
+                          "logs:CreateLogGroup",
+                          "logs:TagResource"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/commercetools-microservice-dev*:*"
+                          }
+                        ]
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "logs:PutLogEvents"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/commercetools-microservice-dev*:*:*"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ],
+              "Path": "/",
+              "RoleName": {
+                "Fn::Join": [
+                  "-",
+                  [
+                    "commercetools-microservice",
+                    "dev",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    "lambdaRole"
+                  ]
+                ]
+              }
+            }
+          },
+          "ApiLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": "serverless-framework-deployments-us-east-1-8ea3edfe-7263",
+                "S3Key": "serverless/commercetools-microservice/dev/1762951703325-2025-11-12T12:48:23.325Z/commercetools-microservice.zip"
+              },
+              "Handler": "dist/lambda.handler",
+              "Runtime": "nodejs18.x",
+              "FunctionName": "commercetools-microservice-dev-api",
+              "MemorySize": 512,
+              "Timeout": 30,
+              "Environment": {
+                "Variables": {
+                  "NODE_ENV": "production",
+                  "CTP_PROJECT_KEY": "n8n-ct-integration",
+                  "CTP_CLIENT_ID": "3ogovnp3HPv04_cmIO2KYAYt",
+                  "CTP_CLIENT_SECRET": "yD7_UU2kgnyRrgV5eYtEchnZVfXOlb_i",
+                  "CTP_API_URL": "https://api.australia-southeast1.gcp.commercetools.com",
+                  "CTP_AUTH_URL": "https://auth.australia-southeast1.gcp.commercetools.com",
+                  "CTP_SCOPES": "manage_project:n8n-ct-integration"
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "ApiLogGroup"
+            ]
+          },
+          "ApiLambdaVersionY4tUgm2gSvs3vc9iQr9pnOFjsAuCukI9M6SGlTbrzU": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "ApiLambdaFunction"
+              },
+              "CodeSha256": "11NtwupXRYzLAZjjB3y5WxRWAqHBzUcVKiZIw1PnpUU="
+            }
+          },
+          "HttpApi": {
+            "Type": "AWS::ApiGatewayV2::Api",
+            "Properties": {
+              "Name": "dev-commercetools-microservice",
+              "ProtocolType": "HTTP"
+            }
+          },
+          "HttpApiStage": {
+            "Type": "AWS::ApiGatewayV2::Stage",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "StageName": "$default",
+              "AutoDeploy": true,
+              "DefaultRouteSettings": {
+                "DetailedMetricsEnabled": false
+              }
+            }
+          },
+          "ApiLambdaPermissionHttpApi": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "ApiLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "HttpApiIntegrationApi": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"ApiLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+              },
+              "PayloadFormatVersion": "2.0",
+              "TimeoutInMillis": 30000
+            }
+          },
+          "HttpApiRouteDefault": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "RouteKey": "$default",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "HttpApiIntegrationApi"
+                    }
+                  ]
+                ]
+              }
+            },
+            "DependsOn": "HttpApiIntegrationApi"
+          }
+        },
+        "Outputs": {
+          "ServerlessDeploymentBucketName": {
+            "Value": "serverless-framework-deployments-us-east-1-8ea3edfe-7263",
+            "Export": {
+              "Name": "sls-commercetools-microservice-dev-ServerlessDeploymentBucketName"
+            }
+          },
+          "ApiLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "ApiLambdaVersionY4tUgm2gSvs3vc9iQr9pnOFjsAuCukI9M6SGlTbrzU"
+            },
+            "Export": {
+              "Name": "sls-commercetools-microservice-dev-ApiLambdaFunctionQualifiedArn"
+            }
+          },
+          "HttpApiId": {
+            "Description": "Id of the HTTP API",
+            "Value": {
+              "Ref": "HttpApi"
+            },
+            "Export": {
+              "Name": "sls-commercetools-microservice-dev-HttpApiId"
+            }
+          },
+          "HttpApiUrl": {
+            "Description": "URL of the HTTP API",
+            "Value": {
+              "Fn::Join": [
+                "",
+                [
+                  "https://",
+                  {
+                    "Ref": "HttpApi"
+                  },
+                  ".execute-api.",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ".",
+                  {
+                    "Ref": "AWS::URLSuffix"
+                  }
+                ]
+              ]
+            },
+            "Export": {
+              "Name": "sls-commercetools-microservice-dev-HttpApiUrl"
+            }
+          }
+        }
+      },
+      "vpc": {}
+    },
+    "plugins": [
+      "serverless-offline"
+    ],
+    "pluginsData": {},
+    "functions": {
+      "api": {
+        "handler": "dist/lambda.handler",
+        "events": [
+          {
+            "httpApi": "*",
+            "resolvedMethod": "ANY"
+          }
+        ],
+        "name": "commercetools-microservice-dev-api",
+        "package": {},
+        "memory": 512,
+        "timeout": 30,
+        "runtime": "nodejs18.x",
+        "vpc": {},
+        "versionLogicalId": "ApiLambdaVersionY4tUgm2gSvs3vc9iQr9pnOFjsAuCukI9M6SGlTbrzU"
+      }
+    },
+    "configValidationMode": "warn",
+    "serviceFilename": "serverless",
+    "initialServerlessConfig": {
+      "service": "commercetools-microservice",
+      "useDotenv": true,
+      "provider": {
+        "$ref": "$[\"service\"][\"provider\"]"
+      },
+      "functions": {
+        "$ref": "$[\"service\"][\"functions\"]"
+      },
+      "plugins": {
+        "$ref": "$[\"service\"][\"plugins\"]"
+      },
+      "package": {
+        "patterns": [
+          "!**",
+          "dist/**",
+          "package.json",
+          "node_modules/**",
+          "!node_modules/@types/**",
+          "!node_modules/typescript/**",
+          "!node_modules/ts-node/**",
+          "!node_modules/@typescript-eslint/**",
+          "!node_modules/eslint/**",
+          "!node_modules/eslint-*/**",
+          "!node_modules/prettier/**",
+          "!node_modules/jest/**",
+          "!node_modules/@jest/**",
+          "!node_modules/jest-*/**",
+          "!node_modules/@nestjs/testing/**",
+          "!node_modules/@nestjs/schematics/**",
+          "!node_modules/supertest/**",
+          "!node_modules/ts-jest/**",
+          "!node_modules/.cache/**",
+          "!node_modules/serverless/**",
+          "!node_modules/serverless-*/**",
+          "!node_modules/tslib/**",
+          "!.git/**",
+          "!test/**",
+          "!coverage/**",
+          "!src/**",
+          "!*.md",
+          "!.env",
+          "!.env.*",
+          "!.vscode/**",
+          "!.idea/**",
+          "!*.config.js",
+          "!tsconfig*.json"
+        ],
+        "artifactsS3KeyDirname": "serverless/commercetools-microservice/dev/code-artifacts",
+        "deploymentBucket": "serverless-framework-deployments-us-east-1-8ea3edfe-7263",
+        "artifact": "/Users/composetech/Nest js/.serverless/commercetools-microservice.zip",
+        "artifactDirectoryName": "serverless/commercetools-microservice/dev/1762951703325-2025-11-12T12:48:23.325Z"
+      }
+    },
+    "appId": null,
+    "orgId": null,
+    "layers": {},
+    "artifact": "/Users/composetech/Nest js/.serverless/commercetools-microservice.zip"
+  },
+  "package": {
+    "artifactDirectoryName": "serverless/commercetools-microservice/dev/1762951703325-2025-11-12T12:48:23.325Z",
+    "artifact": "commercetools-microservice.zip"
+  }
+}
