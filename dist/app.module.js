@@ -10,6 +10,7 @@ exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
 const core_1 = require("@nestjs/core");
+const app_controller_1 = require("./app.controller");
 const commercetools_module_1 = require("./common/commercetools/commercetools.module");
 const auth_module_1 = require("./common/auth/auth.module");
 const http_exception_filter_1 = require("./common/filters/http-exception.filter");
@@ -32,6 +33,7 @@ exports.AppModule = AppModule = __decorate([
             cart_module_1.CartModule,
             checkout_module_1.CheckoutModule,
         ],
+        controllers: [app_controller_1.AppController],
         providers: [
             {
                 provide: core_1.APP_FILTER,

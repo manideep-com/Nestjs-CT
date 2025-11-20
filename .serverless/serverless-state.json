@@ -10,15 +10,19 @@
       "stage": "dev",
       "region": "us-east-1",
       "memorySize": 512,
-      "timeout": 30,
+      "timeout": 29,
       "environment": {
         "NODE_ENV": "production",
+        "STAGE": "dev",
         "CTP_PROJECT_KEY": "n8n-ct-integration",
-        "CTP_CLIENT_ID": "3ogovnp3HPv04_cmIO2KYAYt",
-        "CTP_CLIENT_SECRET": "yD7_UU2kgnyRrgV5eYtEchnZVfXOlb_i",
+        "CTP_ADMIN_CLIENT_ID": "3ogovnp3HPv04_cmIO2KYAYt",
+        "CTP_ADMIN_CLIENT_SECRET": "yD7_UU2kgnyRrgV5eYtEchnZVfXOlb_i",
         "CTP_API_URL": "https://api.australia-southeast1.gcp.commercetools.com",
         "CTP_AUTH_URL": "https://auth.australia-southeast1.gcp.commercetools.com",
-        "CTP_SCOPES": "manage_project:n8n-ct-integration"
+        "CTP_ADMIN_SCOPES": "manage_project:n8n-ct-integration",
+        "CTP_GUEST_CLIENT_ID": "evmVMzcNbji9zIrA20om6dbo",
+        "CTP_GUEST_CLIENT_SECRET": "nK4GSseC5SOQnbHbMiotfN-NCAYefgo6",
+        "CTP_GUEST_SCOPES": "view_products:n8n-ct-integration"
       },
       "versionFunctions": true,
       "compiledCloudFormationTemplate": {
@@ -114,22 +118,26 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-1-8ea3edfe-7263",
-                "S3Key": "serverless/commercetools-microservice/dev/1762951703325-2025-11-12T12:48:23.325Z/commercetools-microservice.zip"
+                "S3Key": "serverless/commercetools-microservice/dev/1763661954624-2025-11-20T18:05:54.624Z/commercetools-microservice.zip"
               },
               "Handler": "dist/lambda.handler",
               "Runtime": "nodejs18.x",
               "FunctionName": "commercetools-microservice-dev-api",
               "MemorySize": 512,
-              "Timeout": 30,
+              "Timeout": 29,
               "Environment": {
                 "Variables": {
                   "NODE_ENV": "production",
+                  "STAGE": "dev",
                   "CTP_PROJECT_KEY": "n8n-ct-integration",
-                  "CTP_CLIENT_ID": "3ogovnp3HPv04_cmIO2KYAYt",
-                  "CTP_CLIENT_SECRET": "yD7_UU2kgnyRrgV5eYtEchnZVfXOlb_i",
+                  "CTP_ADMIN_CLIENT_ID": "3ogovnp3HPv04_cmIO2KYAYt",
+                  "CTP_ADMIN_CLIENT_SECRET": "yD7_UU2kgnyRrgV5eYtEchnZVfXOlb_i",
                   "CTP_API_URL": "https://api.australia-southeast1.gcp.commercetools.com",
                   "CTP_AUTH_URL": "https://auth.australia-southeast1.gcp.commercetools.com",
-                  "CTP_SCOPES": "manage_project:n8n-ct-integration"
+                  "CTP_ADMIN_SCOPES": "manage_project:n8n-ct-integration",
+                  "CTP_GUEST_CLIENT_ID": "evmVMzcNbji9zIrA20om6dbo",
+                  "CTP_GUEST_CLIENT_SECRET": "nK4GSseC5SOQnbHbMiotfN-NCAYefgo6",
+                  "CTP_GUEST_SCOPES": "view_products:n8n-ct-integration"
                 }
               },
               "Role": {
@@ -143,14 +151,14 @@
               "ApiLogGroup"
             ]
           },
-          "ApiLambdaVersionY4tUgm2gSvs3vc9iQr9pnOFjsAuCukI9M6SGlTbrzU": {
+          "ApiLambdaVersionrDeXaGXBPZiHKzSCCZVFoIr1mKCr1ZSrUa04YFEFIQ": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "ApiLambdaFunction"
               },
-              "CodeSha256": "11NtwupXRYzLAZjjB3y5WxRWAqHBzUcVKiZIw1PnpUU="
+              "CodeSha256": "R0TSPnmU7Np7n6jLS9jgm4F9NGeuwsWjdMbnJaoUgTA="
             }
           },
           "HttpApi": {
@@ -256,7 +264,7 @@
           "ApiLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "ApiLambdaVersionY4tUgm2gSvs3vc9iQr9pnOFjsAuCukI9M6SGlTbrzU"
+              "Ref": "ApiLambdaVersionrDeXaGXBPZiHKzSCCZVFoIr1mKCr1ZSrUa04YFEFIQ"
             },
             "Export": {
               "Name": "sls-commercetools-microservice-dev-ApiLambdaFunctionQualifiedArn"
@@ -316,10 +324,10 @@
         "name": "commercetools-microservice-dev-api",
         "package": {},
         "memory": 512,
-        "timeout": 30,
+        "timeout": 29,
         "runtime": "nodejs18.x",
         "vpc": {},
-        "versionLogicalId": "ApiLambdaVersionY4tUgm2gSvs3vc9iQr9pnOFjsAuCukI9M6SGlTbrzU"
+        "versionLogicalId": "ApiLambdaVersionrDeXaGXBPZiHKzSCCZVFoIr1mKCr1ZSrUa04YFEFIQ"
       }
     },
     "configValidationMode": "warn",
@@ -359,7 +367,6 @@
           "!node_modules/.cache/**",
           "!node_modules/serverless/**",
           "!node_modules/serverless-*/**",
-          "!node_modules/tslib/**",
           "!.git/**",
           "!test/**",
           "!coverage/**",
@@ -375,7 +382,7 @@
         "artifactsS3KeyDirname": "serverless/commercetools-microservice/dev/code-artifacts",
         "deploymentBucket": "serverless-framework-deployments-us-east-1-8ea3edfe-7263",
         "artifact": "/Users/composetech/Nest js/.serverless/commercetools-microservice.zip",
-        "artifactDirectoryName": "serverless/commercetools-microservice/dev/1762951703325-2025-11-12T12:48:23.325Z"
+        "artifactDirectoryName": "serverless/commercetools-microservice/dev/1763661954624-2025-11-20T18:05:54.624Z"
       }
     },
     "appId": null,
@@ -384,7 +391,7 @@
     "artifact": "/Users/composetech/Nest js/.serverless/commercetools-microservice.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/commercetools-microservice/dev/1762951703325-2025-11-12T12:48:23.325Z",
+    "artifactDirectoryName": "serverless/commercetools-microservice/dev/1763661954624-2025-11-20T18:05:54.624Z",
     "artifact": "commercetools-microservice.zip"
   }
 }

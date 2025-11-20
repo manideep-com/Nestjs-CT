@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER } from '@nestjs/core';
+import { AppController } from './app.controller';
 import { CommercetoolsModule } from './common/commercetools/commercetools.module';
 import { AuthModule } from './common/auth/auth.module';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
@@ -20,6 +21,7 @@ import { CheckoutModule } from './modules/checkout/checkout.module';
     CartModule,
     CheckoutModule,
   ],
+  controllers: [AppController],
   providers: [
     {
       provide: APP_FILTER,

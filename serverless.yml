@@ -7,15 +7,19 @@ provider:
   stage: ${opt:stage, 'dev'}
   region: us-east-1
   memorySize: 512
-  timeout: 30
+  timeout: 29
   environment:
     NODE_ENV: production
+    STAGE: ${self:provider.stage}
     CTP_PROJECT_KEY: ${env:CTP_PROJECT_KEY}
-    CTP_CLIENT_ID: ${env:CTP_CLIENT_ID}
-    CTP_CLIENT_SECRET: ${env:CTP_CLIENT_SECRET}
+    CTP_ADMIN_CLIENT_ID: ${env:CTP_ADMIN_CLIENT_ID}
+    CTP_ADMIN_CLIENT_SECRET: ${env:CTP_ADMIN_CLIENT_SECRET}
     CTP_API_URL: ${env:CTP_API_URL}
     CTP_AUTH_URL: ${env:CTP_AUTH_URL}
-    CTP_SCOPES: ${env:CTP_SCOPES}
+    CTP_ADMIN_SCOPES: ${env:CTP_ADMIN_SCOPES}
+    CTP_GUEST_CLIENT_ID: ${env:CTP_GUEST_CLIENT_ID}
+    CTP_GUEST_CLIENT_SECRET: ${env:CTP_GUEST_CLIENT_SECRET}
+    CTP_GUEST_SCOPES: ${env:CTP_GUEST_SCOPES}
 
 functions:
   api:
@@ -28,17 +32,10 @@ plugins:
 
 package:
   patterns:
-    # Exclude everything first
     - '!**'
-    
-    # Include compiled code
     - 'dist/**'
     - 'package.json'
-    
-    # Include ALL runtime dependencies (simpler approach)
     - 'node_modules/**'
-    
-    # Explicitly exclude only dev dependencies
     - '!node_modules/@types/**'
     - '!node_modules/typescript/**'
     - '!node_modules/ts-node/**'
@@ -56,9 +53,6 @@ package:
     - '!node_modules/.cache/**'
     - '!node_modules/serverless/**'
     - '!node_modules/serverless-*/**'
-    - '!node_modules/tslib/**'
-    
-    # Exclude other unnecessary files
     - '!.git/**'
     - '!test/**'
     - '!coverage/**'
