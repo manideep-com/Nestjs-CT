@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER } from '@nestjs/core';
 import { CommercetoolsModule } from './common/commercetools/commercetools.module';
+import { AuthModule } from './common/auth/auth.module';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { ProductsModule } from './modules/products/products.module';
 import { CartModule } from './modules/cart/cart.module';
@@ -14,10 +15,10 @@ import { CheckoutModule } from './modules/checkout/checkout.module';
       envFilePath: '.env',
     }),
     CommercetoolsModule,
+    AuthModule, 
     ProductsModule,
     CartModule,
     CheckoutModule,
-  
   ],
   providers: [
     {

@@ -10,4 +10,6 @@ export declare class CheckoutService {
     setShippingMethod(cartId: string, shippingMethodId: string, version: number): Promise<import("@commercetools/platform-sdk").Cart>;
     createOrder(createOrderDto: CreateOrderDto): Promise<import("@commercetools/platform-sdk").Order>;
     getOrderById(orderId: string): Promise<import("@commercetools/platform-sdk").Order>;
+    getShippingMethods(cartId: string): Promise<import("@commercetools/platform-sdk").ShippingMethodPagedQueryResponse>;
+    private getCart;
 }

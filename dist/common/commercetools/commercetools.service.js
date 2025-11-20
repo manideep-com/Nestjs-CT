@@ -20,21 +20,15 @@ let CommercetoolsService = class CommercetoolsService {
     }
     onModuleInit() {
         const projectKey = this.configService.get('CTP_PROJECT_KEY');
-        if (!projectKey)
-            throw new Error('CTP_PROJECT_KEY is not set');
-        this.projectKey = projectKey;
         const authUrl = this.configService.get('CTP_AUTH_URL');
-        if (!authUrl)
-            throw new Error('CTP_AUTH_URL is not set');
-        const clientId = this.configService.get('CTP_CLIENT_ID');
-        if (!clientId)
-            throw new Error('CTP_CLIENT_ID is not set');
-        const clientSecret = this.configService.get('CTP_CLIENT_SECRET');
-        if (!clientSecret)
-            throw new Error('CTP_CLIENT_SECRET is not set');
-        const scopes = this.configService.get('CTP_SCOPES');
-        if (!scopes)
-            throw new Error('CTP_SCOPES is not set');
+        const apiUrl = this.configService.get('CTP_API_URL');
+        const clientId = this.configService.get('CTP_ADMIN_CLIENT_ID');
+        const clientSecret = this.configService.get('CTP_ADMIN_CLIENT_SECRET');
+        const scopes = this.configService.get('CTP_ADMIN_SCOPES');
+        if (!projectKey || !authUrl || !apiUrl || !clientId || !clientSecret || !scopes) {
+            throw new Error('Missing required Commercetools configuration. Please check your .env file.');
+        }
+        this.projectKey = projectKey;
         const authMiddlewareOptions = {
             host: authUrl,
             projectKey: this.projectKey,
@@ -45,9 +39,6 @@ let CommercetoolsService = class CommercetoolsService {
             scopes: [scopes],
             fetch,
         };
-        const apiUrl = this.configService.get('CTP_API_URL');
-        if (!apiUrl)
-            throw new Error('CTP_API_URLis not set');
         const httpMiddlewareOptions = {
             host: apiUrl,
             fetch,

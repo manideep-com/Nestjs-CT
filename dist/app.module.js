@@ -11,6 +11,7 @@ const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
 const core_1 = require("@nestjs/core");
 const commercetools_module_1 = require("./common/commercetools/commercetools.module");
+const auth_module_1 = require("./common/auth/auth.module");
 const http_exception_filter_1 = require("./common/filters/http-exception.filter");
 const products_module_1 = require("./modules/products/products.module");
 const cart_module_1 = require("./modules/cart/cart.module");
@@ -26,6 +27,7 @@ exports.AppModule = AppModule = __decorate([
                 envFilePath: '.env',
             }),
             commercetools_module_1.CommercetoolsModule,
+            auth_module_1.AuthModule,
             products_module_1.ProductsModule,
             cart_module_1.CartModule,
             checkout_module_1.CheckoutModule,

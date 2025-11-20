@@ -11,18 +11,39 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateCartDto = void 0;
 const class_validator_1 = require("class-validator");
+const swagger_1 = require("@nestjs/swagger");
 class CreateCartDto {
     constructor() {
-        this.currency = 'AUD';
+        this.currency = 'USD';
+        this.country = 'US';
     }
 }
 exports.CreateCartDto = CreateCartDto;
 __decorate([
+    (0, swagger_1.ApiPropertyOptional)({
+        example: 'USD',
+        description: 'Currency code (ISO 4217)',
+        default: 'USD'
+    }),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateCartDto.prototype, "currency", void 0);
 __decorate([
+    (0, swagger_1.ApiPropertyOptional)({
+        example: 'US',
+        description: 'Country code (ISO 3166-1 alpha-2)',
+        default: 'US'
+    }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateCartDto.prototype, "country", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({
+        example: 'customer-123',
+        description: 'Customer ID (optional, for registered users)'
+    }),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)

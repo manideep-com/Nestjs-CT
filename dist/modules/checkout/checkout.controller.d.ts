@@ -6,6 +6,7 @@ export declare class CheckoutController {
     constructor(checkoutService: CheckoutService);
     setShippingAddress(id: string, addressDto: SetAddressDto): Promise<import("@commercetools/platform-sdk").Cart>;
     setBillingAddress(id: string, addressDto: SetAddressDto): Promise<import("@commercetools/platform-sdk").Cart>;
+    getShippingMethods(id: string): Promise<import("@commercetools/platform-sdk").ShippingMethodPagedQueryResponse>;
     setShippingMethod(id: string, body: {
         shippingMethodId: string;
         version: number;

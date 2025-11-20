@@ -5,5 +5,4 @@ export declare class SearchProductsDto {
     maxPrice?: number;
     limit?: number;
     offset?: number;
-    constructor();
 }

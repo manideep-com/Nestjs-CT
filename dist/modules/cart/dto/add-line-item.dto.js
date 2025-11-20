@@ -11,25 +11,42 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AddLineItemDto = void 0;
 const class_validator_1 = require("class-validator");
+const swagger_1 = require("@nestjs/swagger");
 class AddLineItemDto {
 }
 exports.AddLineItemDto = AddLineItemDto;
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        example: 'product-123-abc',
+        description: 'Product ID to add to cart'
+    }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], AddLineItemDto.prototype, "productId", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        example: 1,
+        description: 'Product variant ID (usually 1 for main variant)'
+    }),
     (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.Min)(1),
     __metadata("design:type", Number)
 ], AddLineItemDto.prototype, "variantId", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        example: 2,
+        description: 'Quantity of items to add'
+    }),
     (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.Min)(1),
     __metadata("design:type", Number)
 ], AddLineItemDto.prototype, "quantity", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        example: 1,
+        description: 'Current version of the cart'
+    }),
     (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Number)
